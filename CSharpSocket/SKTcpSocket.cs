@@ -223,7 +223,14 @@ namespace CSharpSocket
 
         public void abort()
         {
-            socket.Close();
+            try
+            {
+                socket.Close();
+            }
+            catch(Exception e)
+            {
+
+            }
         }
 
         public bool connectToHost(byte *ip, int ip_len, int port, int exceed_time = 10000)

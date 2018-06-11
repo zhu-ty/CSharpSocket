@@ -2,6 +2,8 @@
 using namespace std;
 #using "../CSharpSocket/bin/Debug/CSharpSocket.dll"
 
+
+
 int main()
 {
 	using namespace CSharpSocket;
@@ -21,6 +23,7 @@ int main()
 	char b[100];
 	memset(b, 0, sizeof(b));
 	int send = 1;
+	tcpsocket->abort();
 	tcpsocket->connectToHost((unsigned char*)p, sizeof(p) - 1, 54321, 10000);
 	tcpsocket->write((unsigned char*)(&send), 4);
 	if (tcpsocket->waitForReadyRead(1000))
