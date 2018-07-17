@@ -235,6 +235,7 @@ namespace CSharpSocket
 
         public bool connectToHost(byte *ip, int ip_len, int port, int exceed_time = 10000)
         {
+            Console.WriteLine("[CSharp Socket] Ver 1.2");
             string target_ip_string = System.Text.Encoding.ASCII.GetString(
                 CopyPtrToArray(ip, ip_len));
             IPAddress target_ip = IPAddress.Parse(target_ip_string);
@@ -256,7 +257,12 @@ namespace CSharpSocket
             byte[] buffer = CopyPtrToArray(data, data_len);
             try
             {
-                socket.Send(buffer);
+                int sent = socket.Send(buffer);
+                while(sent < data_len)
+                {
+                    sent += socket.Send(buffer, sent, data_len - sent, SocketFlags.None);
+                }
+                //Console.WriteLine("[CSharp Socket] Sent " + sent +" bytes.");
             }
             catch(Exception e)
             {
